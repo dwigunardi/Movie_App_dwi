@@ -32,6 +32,7 @@ import SettingsScreen from './components/SettingsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import StackScreen from './components/StackScreen';
+import { MovieList } from './context/MovieStore';
 
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -45,8 +46,8 @@ const App = () => {
   };
 
   return (
+    <MovieList>
     <NavigationContainer>
-
       <Tab.Navigator
         backBehavior='history'
         screenOptions={({ route }) => ({
@@ -80,8 +81,8 @@ const App = () => {
           ),
         }} />
       </Tab.Navigator>
-
     </NavigationContainer>
+    </MovieList>
   );
 };
 

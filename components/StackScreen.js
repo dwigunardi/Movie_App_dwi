@@ -12,14 +12,12 @@ function StackScreen() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Home"
       screenOptions={{
         headerTintColor:"white",
         headerTitle: (props) => ( // App Logo
         <View>
         <AnimatedLottieView source={require('../image/65556-movies-title-animation.json')} autoPlay loop style={{width:100, height:50}} />
         </View>
-
       ),
       headerTitleStyle: { flex: 1, textAlign: 'center' },
         headerStyle: {
