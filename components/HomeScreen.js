@@ -15,13 +15,9 @@ import {
   NativeBaseProvider,
   VStack,
   Box,
-  Divider,
-  AspectRatio,
-  HStack,
 } from 'native-base';
-import WebView from 'react-native-webview';
-import TestCarousel from './TestCarousel';
 import AnimatedCarousel from './AnimatedCarousel';
+import ListFooter from './ListFooter';
 const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [ended, setEnded] = useState(false)
@@ -130,6 +126,7 @@ const data = [
               keyExtractor={item => item.id}
               onEndReached={(props) => setEnded(true)}
               onEndReachedThreshold={0.2}
+              ListFooterComponent={ListFooter}
             />
           </Animated.View>
         )}
