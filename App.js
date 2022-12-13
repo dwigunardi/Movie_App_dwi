@@ -61,7 +61,7 @@ const App = () => {
           },
         })}
       >
-        <Tab.Screen name="Home" component={StackScreen}
+        <Tab.Screen name="Stack" component={StackScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarActiveTintColor :"red",
