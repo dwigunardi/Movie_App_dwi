@@ -6,6 +6,7 @@ import {Image, View, Text} from 'react-native';
 import AnimatedLottieView from 'lottie-react-native';
 import {UserContext} from '../context/UserContext';
 import DetailScreen from './DetailScreen';
+import TestReanimated from './TestReanimated';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,9 @@ function StackScreen() {
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Detail" component={DetailScreen} options={{
+        header:(props) => false,
+      }} />
+       <Stack.Screen name="TestReanimated" component={TestReanimated} options={{
         header:(props) => false,
       }} />
     </Stack.Navigator>

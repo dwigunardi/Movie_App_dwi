@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import AnimatedLottieView from 'lottie-react-native';
 import {MovieContext} from '../context/MovieStore';
-import {NativeBaseProvider, VStack, Box} from 'native-base';
+import {NativeBaseProvider, VStack, Box, Button} from 'native-base';
 import AnimatedCarousel from './AnimatedCarousel';
 import ListFooter from './ListFooter';
 const HomeScreen = (props) => {
@@ -142,6 +142,7 @@ const HomeScreen = (props) => {
             </Animated.View>
           )}
 
+              <Button onPress={() => navigation.navigate('TestReanimated')}>GO test</Button>
           {/* <AnimatedLottieView source={require('../image/29313-netflix-logo-swoop.json')} autoPlay loop style={{padding:200}} /> */}
         </View>
       </ScrollView>
