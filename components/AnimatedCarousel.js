@@ -102,6 +102,7 @@ export default function AnimatedCarousel() {
         snapToAlignment={'center'}
         data={DATA}
         horizontal={true}
+        alwaysBounceHorizontal
         renderItem={({item, index}) => {
           
           return (
@@ -112,6 +113,7 @@ export default function AnimatedCarousel() {
         }}
         //@ts-ignore
         keyExtractor={item => item.id}
+        
         onScroll={event => {
           setScrollX(event.nativeEvent.contentOffset.x);
         }}

@@ -1,32 +1,42 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Animated, {SensorType, useAnimatedSensor, useAnimatedStyle} from 'react-native-reanimated'
-import bg from '../image/WallpaperDog-10760203.jpg'
+import {useWindowDimensions,} from 'react-native';
+import React from 'react';
+import Animated, {
+  interpolate,
+  SensorType,
+  useAnimatedSensor,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+import bg from '../image/bg1.jpg';
 
-const TestReanimated = () => {
-    const sensor = useAnimatedSensor(SensorType.ROTATION)
-    const ImageStyle = useAnimatedStyle(() => {
-        // console.log(sensor?.sensor.value)
+const IMAGE_OFFSET = 50;
+const PI = Math.PI
+const Half_PI = PI / 2
 
-        return {}
-    })
-  return (  
-    <View style={styles.container}>
-      <Image source={bg} style={styles.Image} />
-    </View>
-  )
-}
+const TestReanimated = ({image}) => {
+  const {width, height} = useWindowDimensions();
+  const sensor = useAnimatedSensor(SensorType.ROTATION);
+  const ImageStyle = useAnimatedStyle(() => {
+    const {yaw, pitch, roll} = sensor.sensor.value;
+    // console.log(yaw.toFixed(1), pitch.toFixed(1), roll.toFixed(1));
+    return {
+      top: withTiming(interpolate(pitch, [-Half_PI, Half_PI], [-IMAGE_OFFSET * 2, 0]), {duration:100}) ,
+      left: withTiming(interpolate(roll, [-PI, PI], [-IMAGE_OFFSET * 2, 0]), {duration:100}),
+    };
+  });
+  return (
+      <Animated.Image
+        source={image}
+        style={[
+          {
+            width: width + 2 * IMAGE_OFFSET,
+            height: height + 2 * IMAGE_OFFSET,
+            resizeMode:'cover',
+            opacity:0.7,
+          }, ImageStyle
+        ]}
+      />
+  );
+};
 
-export default TestReanimated
-
-const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        alignItems: 'center',
-        justifyContent:'center',
-    },
-    Image: {
-        width:'100%',
-        height:'100%'
-    }
-})
+export default TestReanimated;

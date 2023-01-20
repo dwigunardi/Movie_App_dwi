@@ -10,12 +10,13 @@ import React, {useContext} from 'react';
 import {NativeBaseProvider} from 'native-base';
 import {MovieContext} from '../context/MovieStore';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import LinearGradient from 'react-native-linear-gradient';
 
 const DetailScreen = props => {
   const {navigation, route} = props;
   const {name, id} = route.params;
   const MovieData = useContext(MovieContext);
-  const findId = MovieData.find(data => data.id == id);
+  const findId = MovieData.item.find(data => data.id == id);
   const getMovieUri = 'https://image.tmdb.org/t/p/w500';
   const windowWidth = Dimensions.get('screen').width;
   const windowHeight = Dimensions.get('screen').height;
@@ -23,29 +24,39 @@ const DetailScreen = props => {
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <View className="h-screen bg-black m-0 relative">
-          <Image
-            source={{
-              uri: `${getMovieUri + findId.poster_path}`,
-            }}
-            alt="image"
-            style={{
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 20,
-              width: windowWidth,
-              height: windowHeight / 3,
-              resizeMode:'cover'
-            }}
-          />
-          <View className="m-4 absolute top-4">
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+        <View className="h-screen m-0 bg-black">
+          <View className="relative">
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              className="absolute z-50 top-4 left-4">
               <Icon name="arrow-back" size={30} color="white" />
             </TouchableOpacity>
           </View>
-          <View className="mt-[-30px]">
-            <Text className="text-white text-lg">Harusnya pas yah</Text>
+          <View
+            style={{
+              width: windowWidth,
+              height: windowHeight / 3,
+              position: 'relative',
+            }}>
+            <View className="absolute top-0 bottom-0 w-full">
+              <LinearGradient
+                colors={['transparent', 'black']}
+                style={{flex: 1}}
+                className="z-10 w-full h-full opacity-100"
+              />
+            </View>
+            <Image
+              source={{
+                uri: `${getMovieUri + findId.backdrop_path}`,
+              }}
+              alt="image"
+              className="object-cover w-full h-full bg-center bg-no-repeat bg-cover"
+            />
           </View>
-          <Text className="text-white text-lg">{name}</Text>
+          <View className="">
+            <Text className="text-lg text-white">Harusnya pas yah</Text>
+          </View>
+          <Text className="text-lg text-white">{name}</Text>
         </View>
       </ScrollView>
     </NativeBaseProvider>

@@ -17,6 +17,7 @@ import {MovieContext} from '../context/MovieStore';
 import {NativeBaseProvider, VStack, Box, Button} from 'native-base';
 import AnimatedCarousel from './AnimatedCarousel';
 import ListFooter from './ListFooter';
+import IndicatorExample from './IndicatorExample';
 const HomeScreen = (props) => {
   const {navigation} = props
   const [loading, setLoading] = useState(true);
@@ -47,7 +48,7 @@ const HomeScreen = (props) => {
       }).start();
     }
   }, [loading]);
-  const data = [...movieItem.slice(0, 5)];
+  // const data = [...movieItem.slice(0, 5)];
   const Check = () => {
     if (ended) {
       if (ended) {
@@ -58,9 +59,9 @@ const HomeScreen = (props) => {
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <View className="h-screen" style={{backgroundColor: 'black'}}>
+        <View style={{backgroundColor: 'black'}}>
           {loading ? (
-            <View className="h-screen flex justify-center align-middle ">
+            <View className="flex justify-center h-screen align-middle ">
               <AnimatedLottieView
                 source={require('../image/97746-loading-deuna.json')}
                 autoPlay
@@ -70,35 +71,31 @@ const HomeScreen = (props) => {
             </View>
           ) : (
             <Animated.View style={{opacity: fadeOut}}>
-              <Text className="text-white ml-7 mt-5 font-serif font-bold text-xl">
+              <Text className="mt-5 font-serif text-xl font-bold text-white ml-7">
                 Coming Soon
               </Text>
               <AnimatedCarousel />
+              <Text className="mt-5 font-serif text-xl font-bold text-white ml-7">
+                Latest Movie
+              </Text>
+              <IndicatorExample data={movieItem.item.slice(0,5)} navigation={navigation} />
+              <Text className="mt-5 font-serif text-xl font-bold text-white ml-7">
+                Movie List
+              </Text>
               <FlatList
                 initialScrollIndex={0}
                 horizontal={true}
-                data={movieItem.slice(0, 5)}
+                data={movieItem.item.slice(5, 15)}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{alignSelf: 'stretch'}}
                 renderItem={({item}) => (
                   <View style={{overflow: 'hidden'}}>
-                    <Box border="2" borderRadius="md" marginTop={'10'}>
+                    <Box border="2" borderRadius="md" marginTop={'2'}>
                       <VStack
                         space="4"
                         justifyContent="center"
                         alignItems="center">
                         <Box px="2" pt="2" borderRadius={'lg'}>
-                          {/* <AspectRatio
-                          w="full"
-                          ratio={{
-                            base: 3 / 4,
-                            md: 9 / 10,
-                          }}
-                          height={{
-                            base: 200,
-                            md: 400,
-                          }}
-                          > */}
                           <TouchableOpacity onPress={() => navigation.navigate('Detail', {
                             id:item.id,
                             name:item.original_title,
@@ -123,12 +120,12 @@ const HomeScreen = (props) => {
                           <Text
                             numberOfLines={1}
                             ellipsizeMode="tail"
-                            className="w-32 text-white text-base font-bold text-clip">
+                            className="w-32 text-base font-bold text-white text-clip">
                             {item.original_title}
                           </Text>
                         </Box>
                         <Box px="4">
-                          <Text className="text-slate-300 font-mono font-light"></Text>
+                          <Text className="font-mono font-light text-slate-300"></Text>
                         </Box>
                       </VStack>
                     </Box>

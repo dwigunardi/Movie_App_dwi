@@ -30,7 +30,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from './components/HomeScreen';
 import SettingsScreen from './components/SettingsScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import StackScreen from './components/StackScreen';
 import {MovieList} from './context/MovieStore';
 import {UserProvider} from './context/UserContext';
@@ -64,26 +64,46 @@ const App = () => {
             <Tab.Screen
               name="Stack"
               component={StackScreen}
-              options={{
+              options={(props) => {
+                // console.log('ini props =>', props)
+                const {navigation } = props
+                return({
                 tabBarLabel: 'Home',
                 tabBarActiveTintColor: 'red',
                 tabBarInactiveTintColor: '#fff',
-                tabBarIcon: ({color, size}) => (
-                  <Icon name="home" color={color} size={size} />
-                ),
-              }}
+                tabBarIcon: ({focused, color, size}) => {
+                  let iconName;
+                  console.log('ini focused => ', navigation.getState().routes.map((data, idx) => data.name == 'Stack'))
+                  const routeName = navigation.getState().routes.map((data, idx) => data.name)
+                  if(routeName[0] == 'Stack'){
+                    iconName = focused ? 'home' : 'home-outline'
+                  }
+                  return(
+                  <Icon name={iconName} color={color} size={size} />
+                )},
+              })}}
             />
             <Tab.Screen
               name="Settings"
               component={SettingsScreen}
-              options={{
-                tabBarLabel: 'Menu',
+              options={(props) => {
+                // console.log('ini props =>', props)
+                const {navigation } = props
+                return({
+                tabBarLabel: 'Settings',
                 tabBarActiveTintColor: 'red',
                 tabBarInactiveTintColor: '#fff',
-                tabBarIcon: ({color, size}) => (
-                  <Icon name="menu" color={color} size={size} />
-                ),
-              }}
+                tabBarIcon: ({focused, color, size}) => {
+                  let iconName;
+                  // console.log('ini focused => ', navigation.getState().routes.map((data, idx) => data.name == 'Stack'))
+                  const routeName = navigation.getState().routes.map((data, idx) => data.name)
+                  if(routeName[1] == 'Settings'){
+                    iconName = focused ? 'menu' : 'menu-open'
+                  }
+                  return(
+                  <Icon name={iconName} color={color} size={size} />
+                )},
+              })}}
             />
           </Tab.Navigator>
         </NavigationContainer>
