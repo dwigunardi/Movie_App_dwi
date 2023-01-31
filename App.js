@@ -6,109 +6,41 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StyleSheet, useColorScheme} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import {NavigationContainer} from '@react-navigation/native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import HomeScreen from './components/HomeScreen';
-import SettingsScreen from './components/SettingsScreen';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import StackScreen from './components/StackScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+
 import {MovieList} from './context/MovieStore';
 import {UserProvider} from './context/UserContext';
+import { ColorProvider } from './context/ColorSceme';
+import {NativeBaseProvider, useColorMode, useColorModeValue} from 'native-base';
+import BottomRoute from './components/BottomRoute';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const Tab = createBottomTabNavigator();
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const isDarkMode = useColorScheme();
 
+  // const setColorScheme = colorScheme.setColor('dark')
+  const text = useColorModeValue('Light', 'Dark');
+  const bg = useColorModeValue('warmGray.50', 'coolGray.800');
+  const backgroundStyle = {
+    backgroundColor: bg == 'warmGray.50' ? Colors.darker : Colors.lighter,
+  };
+  // console.log(colorScheme.changeColor, 'ini kjab');
   return (
-    <MovieList>
-      <UserProvider>
-        <NavigationContainer>
-          <Tab.Navigator
-            backBehavior="history"
-            screenOptions={({route}) => ({
-              headerShown: false,
-              tabBarStyle: {
-                paddingHorizontal: 5,
-                paddingTop: 0,
-                backgroundColor: 'rgba(34,36,40,1)',
-                position: 'absolute',
-                borderTopWidth: 0,
-              },
-            })}>
-            <Tab.Screen
-              name="Stack"
-              component={StackScreen}
-              options={(props) => {
-                // console.log('ini props =>', props)
-                const {navigation } = props
-                return({
-                tabBarLabel: 'Home',
-                tabBarActiveTintColor: 'red',
-                tabBarInactiveTintColor: '#fff',
-                tabBarIcon: ({focused, color, size}) => {
-                  let iconName;
-                  console.log('ini focused => ', navigation.getState().routes.map((data, idx) => data.name == 'Stack'))
-                  const routeName = navigation.getState().routes.map((data, idx) => data.name)
-                  if(routeName[0] == 'Stack'){
-                    iconName = focused ? 'home' : 'home-outline'
-                  }
-                  return(
-                  <Icon name={iconName} color={color} size={size} />
-                )},
-              })}}
-            />
-            <Tab.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={(props) => {
-                // console.log('ini props =>', props)
-                const {navigation } = props
-                return({
-                tabBarLabel: 'Settings',
-                tabBarActiveTintColor: 'red',
-                tabBarInactiveTintColor: '#fff',
-                tabBarIcon: ({focused, color, size}) => {
-                  let iconName;
-                  // console.log('ini focused => ', navigation.getState().routes.map((data, idx) => data.name == 'Stack'))
-                  const routeName = navigation.getState().routes.map((data, idx) => data.name)
-                  if(routeName[1] == 'Settings'){
-                    iconName = focused ? 'menu' : 'menu-open'
-                  }
-                  return(
-                  <Icon name={iconName} color={color} size={size} />
-                )},
-              })}}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </UserProvider>
-    </MovieList>
+    <NativeBaseProvider>
+      <ColorProvider>
+        <MovieList>
+          <UserProvider>
+            <BottomRoute />
+          </UserProvider>
+        </MovieList>
+      </ColorProvider>
+    </NativeBaseProvider>
   );
 };
 

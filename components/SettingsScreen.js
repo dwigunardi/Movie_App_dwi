@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 
-const SettingsScreen = () => {
-    return (
-        <View>
-            <Text className="text-lg text-red-500 text-center">Hy juga</Text>
-        </View>
-    );
-}
 
 const styles = StyleSheet.create({})
 
-export default SettingsScreen;
+const SettingsScreen = () => {
+    return(
+        <View style={{flex:1, justifyContent:'center', alignContent:'center'}}>
+            <Text>Hy tod</Text>
+        </View>
+    )
+}
+export default SettingsScreen
