@@ -6,7 +6,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NativeBaseProvider} from 'native-base';
 import {MovieContext} from '../context/MovieStore';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -21,10 +21,20 @@ const DetailScreen = props => {
   const windowWidth = Dimensions.get('screen').width;
   const windowHeight = Dimensions.get('screen').height;
   // console.log(findId)
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      console.log(e)
+    })
+    return () => {
+      navigation.removeListener('swipe', (e) => {
+        console.log(e)
+      })
+    };
+  }, []);
   return (
     <NativeBaseProvider>
       <ScrollView>
-        <View className="h-screen m-0 bg-black">
+        <View className="container h-screen m-0 bg-black">
           <View className="relative">
             <TouchableOpacity
               onPress={() => navigation.goBack()}

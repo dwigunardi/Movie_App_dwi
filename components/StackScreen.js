@@ -62,20 +62,23 @@ function StackScreen() {
         headerStyle: {
           backgroundColor: ChangeColorMode.isEnabled ? '#222425' : '#f4f3f4',
         },
+        gestureEnabled:true,
+        gestureDirection:'horizontal',
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen
         name="Detail"
         component={DetailScreen}
-        options={{
+        options={({navigation}) => ({
           header: props => false,
-        }}
+        })}
       />
       <Stack.Screen
         name="TestReanimated"
         component={TestReanimated}
         options={{
           header: props => false,
+          gestureEnabled:true,
         }}
       />
     </Stack.Navigator>
